@@ -1,0 +1,137 @@
+swagger: "2.0"
+info:
+  description: "There are a lot of magic here 🪄
+
+You have to assume that this repo will grown in a near future and will should be (almost) production-ready.
+Feel free to modify/add/delete files, folders, packages, endpoints, functions, classes... Whatever you want 😀"
+  version: "1.0.0"
+  title: "Express todo app bad practices"
+host: "localhost"
+basePath: "/v1"
+tags:
+- name: "tasks"
+  description: "Access to todo tasks"
+schemes:
+- "http"
+paths:
+  /tasks:
+    get:
+      tags:
+      - "tasks"
+      summary: "Get all tasks"
+      description: ""
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "List of tasks"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/TaskWithId"
+    post:
+      tags:
+      - "tasks"
+      summary: "Add a new task"
+      description: ""
+      operationId: "createTask"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Task object that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/Task"
+      responses:
+        "200":
+          description: "Task created"
+          schema:
+            $ref: "#/definitions/TaskWithId"
+        "400":
+          description: "Bad request
+          schema:
+            $ref: "#/definitions/Error"
+  /tasks/{id}:
+    patch:
+      tags:
+      - "tasks"
+      summary: "Update an existing task"
+      description: ""
+      operationId: "updateTask"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Task identifier"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Task object that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/Task"
+      responses:
+        "200":
+          description: "Task updated"
+          schema:
+            $ref: "#/definitions/TaskWithId"
+        "400":
+          description: "Bad request"
+          schema:
+            $ref: "#/definitions/Error"
+        "404":
+          description: "Task not found"
+    delete:
+      tags:
+      - "tasks"
+      summary: "Delete an existing task"
+      description: ""
+      operationId: "deleteTask"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Task identifier"
+        required: true
+        type: "string"
+      responses:
+        "204":
+          description: "Task updated"
+        "404":
+          description: "Task not found"
+definitions:
+  Task:
+    type: "object"
+    properties:
+      value:
+        type: "string"
+        description: "Task value"
+      done:
+        type: "string"
+        description: "Either task is done or not"
+  TaskWithId:
+    allOf: 
+     - $ref: "#/definitions/Task"
+    properties:
+      id:
+        type: "string"
+        description: "Task identifier"
+  Error:
+    type: "object"
+    properties:
+      code:
+        type: "string"
+        description: "Error code"
+      message:
+        type: "string"
+        description: "Erorr message"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

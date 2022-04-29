@@ -9,8 +9,8 @@ const getTasks = (_, res: Response<TaskWithId[]>) => {
 }
 
 const createTask = (
-  req: Request<void, Pick<Task, 'value'>>,
-  res: Response<TaskWithId>
+  req: Request<unknown, Pick<Task, 'value'>>,
+  res: Response<TaskWithId>,
 ) => {
   log.info('creating task')
   const task = repository.createTask({
@@ -22,7 +22,7 @@ const createTask = (
 
 const updateTask = (
   req: Request<{ id: string }, Partial<Task>>,
-  res: Response<TaskWithId>
+  res: Response<TaskWithId>,
 ) => {
   const task = repository.updateTask(req.params.id, req.body)
   return res.json(task)

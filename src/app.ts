@@ -10,4 +10,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use('/v1', router)
 app.use(handleError)
-app.listen(config.server.port, () => log.info('Example app running!'))
+app.listen(config.server.port, () =>
+  log.info(`Example app running at http://localhost:${config.server.port}`),
+)

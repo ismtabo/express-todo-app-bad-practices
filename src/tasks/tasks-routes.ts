@@ -1,6 +1,6 @@
 import express from 'express'
 import Joi from 'joi'
-import { validateBody } from '../middlewares'
+import { validateBody } from 'middlewares'
 import controller from './tasks-controllers'
 
 const router = express.Router()

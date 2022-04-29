@@ -1,8 +1,13 @@
 import httpStatus from 'http-status'
 
 export class ApplicationError extends Error {
-  constructor(public statusCode: number, public code: string, message) {
+  public statusCode: number
+  public code: string
+
+  constructor(statusCode: number, code: string, message) {
     super(message)
+    this.statusCode = statusCode
+    this.code = code
   }
 }
 
